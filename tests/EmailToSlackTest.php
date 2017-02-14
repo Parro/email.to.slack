@@ -67,9 +67,8 @@ class EmailToSlackTest extends AbstractTest
 
         $channelNotExist = 'cips';
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('There is no channel "'. $channelNotExist.'"" in this Slack team');
-
         $this->emailToSlack->checkSlackChannelExists($channels, $channelNotExist);
+
+        $this->assertFalse($expected);
     }
 }

@@ -78,9 +78,11 @@ class EmailToSlack
 //            $message->keepUnseen();
                 $channelMail = $this->getChannelFromEmail($message);
 
-                $this->checkSlackChannelExists($slackChannels, $channelMail);
+                if($channelMail !== false) {
+                    $this->checkSlackChannelExists($slackChannels, $channelMail);
 
-                $this->postEmailToSlackChannel($message, $channelMail);
+                    $this->postEmailToSlackChannel($message, $channelMail);
+                }
             }
         }
     }
@@ -107,8 +109,7 @@ class EmailToSlack
 
     /**
      * @param \Ddeboer\Imap\Message $message
-     * @return string
-     * @throws \Exception
+     * @return string|bool
      */
     public function getChannelFromEmail($message)
     {
@@ -124,17 +125,7 @@ class EmailToSlack
             }
         }
 
-        $mailTos = $message->getTo();
-
-        foreach ($mailTos as $mailTo) {
-            preg_match('/slack-(.*)@/', $mailTo, $found);
-
-            if (count($found) > 0) {
-                return $found[1];
-            }
-        }
-
-        throw new \Exception('Malformed recipient');
+        return false;
     }
 
     /**
