@@ -113,12 +113,20 @@ class EmailToSlack
      */
     public function getChannelFromEmail($message)
     {
-        $channelName = [];
-
         $mailTos = $message->getTo();
 
         foreach ($mailTos as $mailTo) {
             preg_match('/slack-(.*)@/', $mailTo, $found);
+
+            if (count($found) > 0) {
+                return $found[1];
+            }
+        }
+
+        $mailCcs = $message->getCc();
+
+        foreach ($mailCcs as $mailCc) {
+            preg_match('/slack-(.*)@/', $mailCc, $found);
 
             if (count($found) > 0) {
                 return $found[1];
