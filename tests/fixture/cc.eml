@@ -1,0 +1,77 @@
+Return-Path: <mauro@example.com.com>
+X-Original-To: test@example.com
+Delivered-To: test@example.com
+Received: from mail-wm0-f47.google.com (mail-wm0-f47.google.com [74.125.82.47])
+	by lfm5-pgd5.accessdomain.com (Postfix) with ESMTPS id 4A959EE0BC
+	for <test@example.com>; Tue, 14 Feb 2017 07:04:09 -0500 (EST)
+Received: by mail-wm0-f47.google.com with SMTP id v186so16007773wmd.0
+        for <test@example.com>; Tue, 14 Feb 2017 04:04:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=intermediammh-com.20150623.gappssmtp.com; s=20150623;
+        h=from:mime-version:subject:message-id:date:cc:to;
+        bh=id7HtcCMTXf1JO8oJRktur/c1ejg/e9nSejNdaTTMYs=;
+        b=p29o5mLRqiPkJLwy8jTSFRo
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:message-id:date:cc:to;
+        bh=id7HtcCMTXf1JO8oJRktur/c1ejg/e9nSejNdaTTMYs=;
+        b=Y5AOhwFSTz3Bfkb
+X-Gm-Message-State: AMke39lnD0OvZtHeOz8PfbJCZGJh6VQjmosNITeg9TyBpaiRAYYDaBozonG7jRZ6WS6xqg==
+X-Received: by 10.28.61.84 with SMTP id k81mr2791410wma.27.1487073843259;
+        Tue, 14 Feb 2017 04:04:03 -0800 (PST)
+Received: from localhost ([127.0.0.1])
+        by smtp.gmail.com with ESMTPSA id t103sm517199wrc.43.2017.02.14.04.04.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Feb 2017 04:04:02 -0800 (PST)
+From: Mauro Parolari <mauro@example.com.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_38687C5A-06A6-4EF7-995B-D902E4B5328E"
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Test cc
+Message-Id: <3B284D0F-551B-4C60-BD12-92CF5E3A7C9A@example.com.com>
+Date: Tue, 14 Feb 2017 13:04:01 +0100
+Cc: slack-general@example.com
+To: Mauro <test@example.com>
+X-Mailer: Apple Mail (2.3259)
+
+
+--Apple-Mail=_38687C5A-06A6-4EF7-995B-D902E4B5328E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+
+
+______________________________________________
+
+mauro parolari
+| http://www.example.com.com | =
+mauro@example.com.com
+
+
+
+--Apple-Mail=_38687C5A-06A6-4EF7-995B-D902E4B5328E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D""><br class=3D"">
+<br class=3D""><div class=3D"">
+<div style=3D"color: rgb(0, 0, 0); letter-spacing: normal; orphans: =
+auto; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D"">______________________________________________<br =
+class=3D""><br class=3D"">mauro parolari<br class=3D"">
+ |&nbsp;<a href=3D"http://www.example.com.com" =
+class=3D"">http://www.example.com.com</a>&nbsp;|&nbsp;<a =
+href=3D"mailto:mauro@example.com.com" =
+class=3D"">mauro@example.com.com</a><br class=3D""><br class=3D""></div>
+</div>
+<br class=3D""></body></html>=
+
+--Apple-Mail=_38687C5A-06A6-4EF7-995B-D902E4B5328E--

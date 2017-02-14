@@ -1,0 +1,180 @@
+Return-Path: <mauro@example.com>
+X-Original-To: slack-general@example.com
+Delivered-To: slack@example.com
+Received: from mail-wm0-f44.google.com (mail-wm0-f44.google.com [74.125.82.44])
+	by lfm5-pgd5.accessdomain.com (Postfix) with ESMTPS id 01C15F3CE4
+	for <slack-general@example.com>; Mon, 13 Feb 2017 08:30:34 -0500 (EST)
+Received: by mail-wm0-f44.google.com with SMTP id v77so93597717wmv.0
+        for <slack-general@example.com>; Mon, 13 Feb 2017 05:30:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=intermediammh-com.20150623.gappssmtp.com; s=20150623;
+        h=from:mime-version:subject:message-id:references:to:date;
+        bh=FWJY3ata/RPQUlutqL4sntMZ9zY17PbYmO54OAufL0U=;
+        b=vp5pozy/f
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:message-id:references
+         :to:date;
+        bh=FWJY3ata/
+X-Gm-Message-State: AMke39mPoL+Xlt7wJsDlYcOWFTLrgPgu+SH1RuqiDoFAJKq6/UxaUSWGT91F/jXCWWtqRQ==
+X-Received: by 10.28.210.65 with SMTP id j62mr18598743wmg.9.1486992632764;
+        Mon, 13 Feb 2017 05:30:32 -0800 (PST)
+Received: from localhost ([127.0.0.1])
+        by smtp.gmail.com with ESMTPSA id w69sm5377448wmw.22.2017.02.13.05.30.31
+        for <slack-general@example.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Feb 2017 05:30:32 -0800 (PST)
+From: Mauro <mauro@example.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_9E8DB88E-82A0-46FE-887B-F26D6359AA99"
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Fwd: informative app
+Message-Id: <DB343E8C-B2DD-4716-BB79-08F15D5A5C9C@example.com>
+References: <83274F20-9B2A-4F61-8D9E-63F73D8EFBFE@example.com>
+To: slack-general@example.com
+Date: Mon, 13 Feb 2017 14:30:30 +0100
+X-Mailer: Apple Mail (2.3259)
+
+
+--Apple-Mail=_9E8DB88E-82A0-46FE-887B-F26D6359AA99
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+
+
+> Inizio messaggio inoltrato:
+>=20
+> Da: Giuseppe <giuseppe@example.com>
+> Oggetto: I: I: informative app
+> Data: 13 febbraio 2017 12:59:21 CET
+> A: Francesca <francesca@example.com>, Yan =
+<yan@example.com>, Gabriele <gabriele@example.com>, =
+Mauro <mauro@example.com>, Lorenzo =
+<lorenzo@example.com>
+>=20
+> Ecco le atre richieste.=20
+>=20
+> Sent from my iPhone. Please pardon any typos
+>=20
+
+______________________________________________
+
+mauro parolari
+ | http://www.example.com | =
+mauro@example.com
+
+
+
+--Apple-Mail=_9E8DB88E-82A0-46FE-887B-F26D6359AA99
+Content-Type: multipart/mixed;
+	boundary="Apple-Mail=_E7F4330A-EFB1-40C0-AE8F-86DF39AEB48C"
+
+
+--Apple-Mail=_E7F4330A-EFB1-40C0-AE8F-86DF39AEB48C
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
+class=3D""><br class=3D""><div><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D"">Inizio messaggio inoltrato:</div><br =
+class=3D"Apple-interchange-newline"><div style=3D"margin-top: 0px; =
+margin-right: 0px; margin-bottom: 0px; margin-left: 0px;" class=3D""><span=
+ style=3D"font-family: -webkit-system-font, Helvetica Neue, Helvetica, =
+sans-serif; color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">Da: =
+</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
+Neue, Helvetica, sans-serif;" class=3D"">Giuseppe &lt;<a =
+href=3D"mailto:giuseppe@example.com" =
+class=3D"">giuseppe@example.com</a>&gt;<br =
+class=3D""></span></div><div style=3D"margin-top: 0px; margin-right: =
+0px; margin-bottom: 0px; margin-left: 0px;" class=3D""><span =
+style=3D"font-family: -webkit-system-font, Helvetica Neue, Helvetica, =
+sans-serif; color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">Oggetto: =
+</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
+Neue, Helvetica, sans-serif;" class=3D""><b class=3D"">I: I: informative =
+app</b><br class=3D""></span></div><div style=3D"margin-top: 0px; =
+margin-right: 0px; margin-bottom: 0px; margin-left: 0px;" class=3D""><span=
+ style=3D"font-family: -webkit-system-font, Helvetica Neue, Helvetica, =
+sans-serif; color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">Data: =
+</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
+Neue, Helvetica, sans-serif;" class=3D"">13 febbraio 2017 12:59:21 =
+CET<br class=3D""></span></div><div style=3D"margin-top: 0px; =
+margin-right: 0px; margin-bottom: 0px; margin-left: 0px;" class=3D""><span=
+ style=3D"font-family: -webkit-system-font, Helvetica Neue, Helvetica, =
+sans-serif; color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">A: =
+</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
+Neue, Helvetica, sans-serif;" class=3D"">Francesca &lt;<a =
+href=3D"mailto:francesca@example.com" =
+class=3D"">francesca@example.com</a>&gt;, Yan &lt;<a =
+href=3D"mailto:yan@example.com" =
+class=3D"">yan@example.com</a>&gt;, Gabriele &lt;<a =
+href=3D"mailto:gabriele@example.com" =
+class=3D"">gabriele@example.com</a>&gt;, Mauro &lt;<a =
+href=3D"mailto:mauro@example.com" =
+class=3D"">mauro@example.com</a>&gt;, Lorenzo &lt;<a =
+href=3D"mailto:lorenzo@example.com" =
+class=3D"">lorenzo@example.com</a>&gt;<br =
+class=3D""></span></div><br class=3D""><div class=3D""><div =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px;" class=3D"">Ecco le atre =
+richieste.&nbsp;</div><div style=3D"font-family: Helvetica; font-size: =
+14px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; orphans: auto; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: =
+auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;" class=3D""><br =
+class=3D""></div><div style=3D"font-family: Helvetica; font-size: 14px; =
+font-style: normal; font-variant-caps: normal; font-weight: normal; =
+letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px;" class=3D"">Fatemi =
+sapere per favore.&nbsp;</div><div style=3D"font-family: Helvetica; =
+font-size: 14px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;" =
+class=3D"">Soprattutto se ci sono cose poco chiare</div><div =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px;" class=3D"">Grazie</div><div =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px;" class=3D""><br class=3D""></div><div =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px;" class=3D""><br class=3D""><br =
+class=3D"">Sent from my iPhone. Please pardon any typos</div><div =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px;" class=3D""><br class=3D"">Begin =
+forwarded message:<br class=3D""><br class=3D""></div><div =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px;" class=3D""><span =
+class=3D""></span></div><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 14px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" =
+class=3D""><div =
+class=3D""></div></blockquote></div></blockquote></div></body></html>=
+
+--Apple-Mail=_E7F4330A-EFB1-40C0-AE8F-86DF39AEB48C--
+
+--Apple-Mail=_9E8DB88E-82A0-46FE-887B-F26D6359AA99--

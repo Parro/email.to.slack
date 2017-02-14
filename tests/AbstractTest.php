@@ -24,6 +24,8 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
         $imapClientMock = Mockery::mock('Server');
 
         $connectionMock = $imapClientMock->shouldReceive('authenticate')->with('', '')->andReturnSelf();
+        $connectionMock->shouldReceive('getResource')->andReturn(1);
+
         $mailBoxMock = $connectionMock->shouldReceive('getMailbox')->with('INBOX')->andReturnSelf();
 
         $messagesMock = $mailBoxMock->shouldReceive('getMessages')->with(Mockery::ducktype('addCondition'))->andReturnUsing(function () {
@@ -73,6 +75,22 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
             $slackChannelMock1,
             $slackChannelMock2
         ];
+    }
+
+    public function getMessageMock($messageType)
+    {
+        $messageMock = Mockery::mock(Message::class);
+        $messageMock->shouldReceive('getBodyText')->andReturn(file_get_contents(__DIR__ . '/fixture/' . $messageType . '.txt'));
+        $messageMock->shouldReceive('getBodyHtml')->andReturn(file_get_contents(__DIR__ . '/fixture/' . $messageType . '.html'));
+        $messageMock->shouldReceive('getFrom')->andReturn('mauro@example.com');
+        $messageMock->shouldReceive('getTo')->andReturn(['slack-general@mmh-tech.com', 'test@example.com']);
+        $messageMock->shouldReceive('hasAttachments')->andReturn(false);
+//        $messageMock->shouldReceive('getAttachments')->andReturn(0);
+        $messageMock->shouldReceive('getNumber')->andReturn(1);
+        $messageMock->shouldReceive('getDate')->andReturn(new \DateTime('2017-02-13 18:01:11'));
+
+        return $messageMock;
+
     }
 
     public function tearDown()
