@@ -64,7 +64,7 @@ class EmailToSlack
             return true;
         }
 
-        throw new \Exception('There is no channel "' . $channel . '"" in this Slack team');
+        return false;
     }
 
     public function checkMail($mailUsername, $mailPassword)
@@ -78,9 +78,7 @@ class EmailToSlack
 //            $message->keepUnseen();
                 $channelMail = $this->getChannelFromEmail($message);
 
-                if($channelMail !== false) {
-                    $this->checkSlackChannelExists($slackChannels, $channelMail);
-
+                if($channelMail !== false && $this->checkSlackChannelExists($slackChannels, $channelMail)) {
                     $this->postEmailToSlackChannel($message, $channelMail);
                 }
             }
@@ -210,25 +208,33 @@ class EmailToSlack
 
         preg_match('/Da:(.*)|From:(.*)/', $messageBody, $fromPreg);
 
-        $from = $fromPreg[1];
-        $from = str_replace(["\r", "\n"], "", $from);
-
-        $messageToArr = [];
-        foreach ($message->getTo() as $messageTo) {
-            $messageToArr[] = $messageTo;
+        if(count($fromPreg) > 0) {
+            $from = $fromPreg[1];
+            $from = str_replace(["\r", "\n"], "", $from);
+        }else {
+            $from = $message->getFrom();
         }
 
 
         preg_match('/A:(.*)|To:(.*)/', $messageBody, $toPreg);
 
-        $to = $toPreg[1];
-        $to = str_replace(["\r", "\n"], "", $to);
+        if(count($toPreg) > 0) {
+            $to = $toPreg[1];
+            $to = str_replace(["\r", "\n"], "", $to);
+        }else{
+            $messageToArr = [];
+            foreach ($message->getTo() as $messageTo) {
+                $messageToArr[] = $messageTo;
+            }
+
+            $to = implode(', ',$messageToArr);
+        }
 
         $text = '';
 
-        $text .= '*From: ' . $from . '*' . "\n";
+        $text .= '*From: ' . trim($from) . '*' . "\n";
 
-        $text .= '*To: ' . $to . '*' . "\n";
+        $text .= '*To: ' . trim($to) . '*' . "\n";
 
         if($message->hasAttachments()){
             $text .= '*With ' . count($message->getAttachments()) . ' attachments*' . "\n";
