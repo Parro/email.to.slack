@@ -29,6 +29,12 @@ class EmailToSlack
 
     public function __construct($slackToken, $imapHostname, $logger = null, $slackClient = null, $imapClient = null)
     {
+        if (!is_null($logger)) {
+            $this->logger = $logger;
+        } else {
+            $this->logger = new Logger('emailToSlack');
+        }
+
         if (!is_null($slackClient)) {
             $this->slackClient = $slackClient;
         } else {
@@ -38,12 +44,6 @@ class EmailToSlack
             $this->imapClient = $imapClient;
         } else {
             $this->imapClient = new Server($imapHostname, 143, '');
-        }
-
-        if (!is_null($imapClient)) {
-            $this->logger = $logger;
-        } else {
-            $this->logger = new Logger('emailToSlack');
         }
     }
 
