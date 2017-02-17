@@ -77,4 +77,27 @@ class EmailToSlackPayloadTest extends AbstractTest
         $this->assertRegExp($payloadExpectedInitialCommentTo, $payloadInitialComment);
 
     }
+
+    public function testGetPayloadFileAttachments()
+    {
+        $this->initEmailToSlack();
+
+        $messageType = 'forward';
+
+        $messageMock = $this->getMessageMock($messageType, 'general', true, false, true);
+
+        $messageMock->shouldReceive('getAttachments')->andReturn(['', '']);
+
+        self::$functions->shouldReceive('imap_fetchbody')->with(1, 1, '', 0)->once()->andReturn(file_get_contents(__DIR__ . '/fixture/' . $messageType . '.eml'));
+
+        $messages = $this->emailToSlack->getMails('', '');
+
+        $payload = $this->emailToSlack->getPayloadFile($messageMock);
+
+        $payloadInitialComment = $payload->getInitialComment();
+
+        $payloadExpectedInitialCommentAttachments = '/\*With 2 attachments\*/';
+
+        $this->assertRegExp($payloadExpectedInitialCommentAttachments, $payloadInitialComment);
+    }
 }

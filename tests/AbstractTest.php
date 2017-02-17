@@ -21,6 +21,16 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
 
     public function initEmailToSlack()
     {
+        $loggerMock = Mockery::mock('Monolog');
+
+
+//        $responseMock = $loggerMock->shouldReceive('send')->with(Mockery::ducktype('getMethod'))->andReturnSelf();
+//        $responseMock->shouldReceive('isOk')->andReturn(true);
+//
+//        $slackChannelMock = $responseMock->shouldReceive('getChannels')->andReturnUsing(function () {
+//            return $this->getSlackChannelMock();
+//        });
+
         $imapClientMock = Mockery::mock('Server');
 
         $connectionMock = $imapClientMock->shouldReceive('authenticate')->with('', '')->andReturnSelf();
@@ -42,19 +52,15 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
             return $this->getSlackChannelMock();
         });
 
-        $this->emailToSlack = new EmailToSlack('', '', $slackClientMock, $imapClientMock);
+        $this->emailToSlack = new EmailToSlack('', '', $loggerMock, $slackClientMock, $imapClientMock);
     }
 
 
     public function getMessagesMock()
     {
-        $messageMock1 = Mockery::mock(Message::class);
-        $messageMock1->shouldReceive('getSubject')->andReturn('Mail di test per general');
-        $messageMock1->shouldReceive('getTo')->andReturn(['slack-general@mmh-tech.com']);
+        $messageMock1 = $this->getMessageMock('forward', 'general');
 
-        $messageMock2 = Mockery::mock(Message::class);
-        $messageMock2->shouldReceive('getSubject')->andReturn('Mail di test per random');
-        $messageMock2->shouldReceive('getTo')->andReturn(['slack-random@mmh-tech.com']);
+        $messageMock2 = $this->getMessageMock('forward', 'random');
 
         return [
             $messageMock1,
@@ -77,14 +83,22 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessageMock($messageType)
+    public function getMessageMock($messageType, $channel = 'general', $getTo = true, $getCc = false, $hasAttachments = false)
     {
         $messageMock = Mockery::mock(Message::class);
         $messageMock->shouldReceive('getBodyText')->andReturn(file_get_contents(__DIR__ . '/fixture/' . $messageType . '.txt'));
         $messageMock->shouldReceive('getBodyHtml')->andReturn(file_get_contents(__DIR__ . '/fixture/' . $messageType . '.html'));
+        $messageMock->shouldReceive('getSubject')->andReturn('Mail di test per ' . $channel);
         $messageMock->shouldReceive('getFrom')->andReturn('mauro@example.com');
-        $messageMock->shouldReceive('getTo')->andReturn(['slack-general@mmh-tech.com', 'test@example.com']);
-        $messageMock->shouldReceive('hasAttachments')->andReturn(false);
+        if ($getTo) {
+            $messageMock->shouldReceive('getTo')->andReturn(['slack-' . $channel . '@mmh-tech.com', 'test@example.com']);
+        }else{
+            $messageMock->shouldReceive('getTo')->andReturn([]);
+        }
+        if ($getCc) {
+            $messageMock->shouldReceive('getCc')->andReturn(['slack-' . $channel . '@mmh-tech.com']);
+        }
+        $messageMock->shouldReceive('hasAttachments')->andReturn($hasAttachments);
 //        $messageMock->shouldReceive('getAttachments')->andReturn(0);
         $messageMock->shouldReceive('getNumber')->andReturn(1);
         $messageMock->shouldReceive('getDate')->andReturn(new \DateTime('2017-02-13 18:01:11'));

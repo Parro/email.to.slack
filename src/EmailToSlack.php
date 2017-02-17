@@ -4,7 +4,6 @@ namespace EmailToSlack;
 
 use CL\Slack\Payload\ChannelsListPayload;
 use CL\Slack\Payload\ChannelsListPayloadResponse;
-use CL\Slack\Payload\ChatPostMessagePayload;
 use CL\Slack\Payload\ChatPostMessagePayloadResponse;
 use CL\Slack\Payload\FilesUploadPayload;
 use CL\Slack\Transport\ApiClient;
@@ -12,6 +11,7 @@ use Ddeboer\Imap\Connection;
 use Ddeboer\Imap\Search\Flag\Unseen;
 use Ddeboer\Imap\SearchExpression;
 use Ddeboer\Imap\Server;
+use Monolog\Logger;
 
 class EmailToSlack
 {
@@ -24,7 +24,10 @@ class EmailToSlack
     /** @var  Connection */
     public $imapConnection;
 
-    public function __construct($slackToken, $imapHostname, $slackClient = null, $imapClient = null)
+    /** @var Logger */
+    public $logger;
+
+    public function __construct($slackToken, $imapHostname, $logger = null, $slackClient = null, $imapClient = null)
     {
         if (!is_null($slackClient)) {
             $this->slackClient = $slackClient;
@@ -35,6 +38,12 @@ class EmailToSlack
             $this->imapClient = $imapClient;
         } else {
             $this->imapClient = new Server($imapHostname, 143, '');
+        }
+
+        if (!is_null($imapClient)) {
+            $this->logger = $logger;
+        } else {
+            $this->logger = new Logger('emailToSlack');
         }
     }
 
@@ -58,31 +67,42 @@ class EmailToSlack
         return $channelList;
     }
 
-    public function checkSlackChannelExists($slackChannels, $channel)
+    public function checkSlackChannelExists($slackChannels, $channel, $message)
     {
         if (in_array($channel, $slackChannels)) {
             return true;
         }
+
+        $this->logger->warning('No channel named "' . $channel . '" found in this team', ['channel' => $channel, 'subject' => $message->getSubject(), 'time' => $message->getDate()->format('Y-m-d H:i:s')]);
+
+        // Mark message as seen
+        $message->getBodyHtml();
 
         return false;
     }
 
     public function checkMail($mailUsername, $mailPassword)
     {
+        $postSent = 0;
+
         $messages = $this->getMails($mailUsername, $mailPassword);
 
-        if(!empty($messages)) {
+        if (!empty($messages)) {
             $slackChannels = $this->getSlackChannels();
 
             foreach ($messages as $message) {
 //            $message->keepUnseen();
                 $channelMail = $this->getChannelFromEmail($message);
 
-                if($channelMail !== false && $this->checkSlackChannelExists($slackChannels, $channelMail)) {
+                if ($channelMail !== false && $this->checkSlackChannelExists($slackChannels, $channelMail, $message)) {
                     $this->postEmailToSlackChannel($message, $channelMail);
+
+                    $postSent ++;
                 }
             }
         }
+
+        return $postSent;
     }
 
     /**
@@ -131,6 +151,11 @@ class EmailToSlack
             }
         }
 
+        $this->logger->warning('No channel found', ['channel' => '', 'subject' => $message->getSubject(), 'time' => $message->getDate()->format('Y-m-d H:i:s')]);
+
+        // Mark message as seen
+        $message->getBodyHtml();
+
         return false;
     }
 
@@ -149,47 +174,10 @@ class EmailToSlack
         $response = $this->slackClient->send($payload);
 
         if ($response->isOk()) {
-            echo "Message sent";
+            $this->logger->info('Message posted in channel "' . $channelMail . '" ', ['channel' => $channelMail, 'subject' => $message->getSubject(), 'time' => $message->getDate()->format('Y-m-d H:i:s')]);
         } else {
             throw new \Exception($response->getErrorExplanation());
         }
-    }
-
-    /**
-     * @param \Ddeboer\Imap\Message $message
-     * @return ChatPostMessagePayload
-     * @deprecated
-     */
-    public function getPayloadPost($message)
-    {
-        $payload = new ChatPostMessagePayload();
-
-        $text = '';
-
-        $text .= '*From: ' . $message->getFrom() . '*' . "\n";
-
-        $messageToArr = [];
-        foreach ($message->getTo() as $messageTo) {
-            $messageToArr[] = $messageTo;
-        }
-
-
-        $text .= '*To: ' . implode(', ', $messageToArr) . '*' . "\n";
-
-        $messageBody = $message->getBodyText();
-
-        if (is_null($messageBody)) {
-            $messageBody = $message->getBodyHtml();
-        }
-
-        $messageBody = preg_replace('/<(br[^>]*)>/i', "\n", $messageBody);
-
-        $text .= html_entity_decode(strip_tags($messageBody));
-
-
-        $payload->setText($text);
-
-        return $payload;
     }
 
     /**
@@ -208,26 +196,26 @@ class EmailToSlack
 
         preg_match('/Da:(.*)|From:(.*)/', $messageBody, $fromPreg);
 
-        if(count($fromPreg) > 0) {
+        if (count($fromPreg) > 0) {
             $from = $fromPreg[1];
             $from = str_replace(["\r", "\n"], "", $from);
-        }else {
+        } else {
             $from = $message->getFrom();
         }
 
 
         preg_match('/A:(.*)|To:(.*)/', $messageBody, $toPreg);
 
-        if(count($toPreg) > 0) {
+        if (count($toPreg) > 0) {
             $to = $toPreg[1];
             $to = str_replace(["\r", "\n"], "", $to);
-        }else{
+        } else {
             $messageToArr = [];
             foreach ($message->getTo() as $messageTo) {
                 $messageToArr[] = $messageTo;
             }
 
-            $to = implode(', ',$messageToArr);
+            $to = implode(', ', $messageToArr);
         }
 
         $text = '';
@@ -236,7 +224,7 @@ class EmailToSlack
 
         $text .= '*To: ' . trim($to) . '*' . "\n";
 
-        if($message->hasAttachments()){
+        if ($message->hasAttachments()) {
             $text .= '*With ' . count($message->getAttachments()) . ' attachments*' . "\n";
         }
 

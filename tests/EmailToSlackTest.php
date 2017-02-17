@@ -9,6 +9,19 @@ use EmailToSlack\EmailToSlack;
 
 class EmailToSlackTest extends AbstractTest
 {
+    public function testCheckMail()
+    {
+        $this->initEmailToSlack();
+
+        $this->emailToSlack->logger->shouldReceive('info');
+
+        $postSent = $this->emailToSlack->checkMail('', '');
+
+        $postSentExpected = 2;
+
+        $this->assertEquals($postSentExpected, $postSent);
+
+    }
 
     public function testGetMails()
     {
@@ -18,7 +31,7 @@ class EmailToSlackTest extends AbstractTest
 
 //        $this->getMessagesMock();
 
-        $messages = $this->emailToSlack->getMails('','');
+        $messages = $this->emailToSlack->getMails('', '');
 
         $this->assertInstanceOf(Message::class, $messages[0]);
 
@@ -33,13 +46,21 @@ class EmailToSlackTest extends AbstractTest
     {
         $this->initEmailToSlack();
 
-        $messages = $this->getMessagesMock();
+        $message = $this->getMessageMock('forward');
 
-        $channel = $this->emailToSlack->getChannelFromEmail($messages[0]);
+        $channel = $this->emailToSlack->getChannelFromEmail($message);
 
         $channelExpected = 'general';
 
         $this->assertEquals($channel, $channelExpected);
+
+        $messageCc = $this->getMessageMock('forward','random', false, true);
+
+        $channelCc = $this->emailToSlack->getChannelFromEmail($messageCc);
+
+        $channelExpectedCc = 'random';
+
+        $this->assertEquals($channelCc, $channelExpectedCc);
     }
 
     public function testGetSlackChannels()
@@ -57,17 +78,24 @@ class EmailToSlackTest extends AbstractTest
     {
         $this->initEmailToSlack();
 
+        $messageMock = $this->getMessageMock('forward');
+
         $channels = ['general', 'random'];
 
         $channelExist = 'general';
 
-        $expected = $this->emailToSlack->checkSlackChannelExists($channels, $channelExist);
+        $this->emailToSlack->logger->shouldReceive('warning')->with('No channel named "' . $channelExist . '" found in this team', ['channel' => $channelExist, 'subject' => 'Mail di test per general', 'time' => '2017-02-13 18:01:11']);
+
+        $expected = $this->emailToSlack->checkSlackChannelExists($channels, $channelExist, $messageMock);
+
 
         $this->assertTrue($expected);
 
         $channelNotExist = 'cips';
 
-        $expected = $this->emailToSlack->checkSlackChannelExists($channels, $channelNotExist);
+        $this->emailToSlack->logger->shouldReceive('warning')->with('No channel named "' . $channelNotExist . '" found in this team', ['channel' => $channelNotExist, 'subject' => 'Mail di test per general', 'time' => '2017-02-13 18:01:11']);
+
+        $expected = $this->emailToSlack->checkSlackChannelExists($channels, $channelNotExist, $messageMock);
 
         $this->assertFalse($expected);
     }

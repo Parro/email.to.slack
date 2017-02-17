@@ -12,7 +12,8 @@
   "require": {
     "cleentfaar/slack": "~0.14",
     "ddeboer/imap": "^0.5.2",
-    "adam-paterson/oauth2-slack": "^1.1"
+    "adam-paterson/oauth2-slack": "^1.1",
+    "monolog/monolog": "^1.22"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
